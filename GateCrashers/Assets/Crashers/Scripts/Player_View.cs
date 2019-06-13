@@ -3,8 +3,12 @@ using UnityEngine.AI;
 using Mirror;
 namespace GateCrashers
 {
-    public class Player : NetworkBehaviour
+    public class Player_View : NetworkBehaviour
     {
+        [Header("Model")]
+        public Player_Model Model;
+        [Header("Controller")]
+        public Player_Controller Controller;
         [Header("Components")]
         public Rigidbody body;
         public Animator animator;
@@ -12,14 +16,6 @@ namespace GateCrashers
         [Header("Camera")]
         public GameObject CameraPrefab;
         public GameObject ClientCamera;
-        
-        [Header("Movement")]
-        public float movementSpeed = 100;
-        public KeyCode jumpKey = KeyCode.Space;
-
-        [Header("Firing")]
-        public GameObject projectilePrefab;
-        public Transform projectileMount;
 
         public override void OnStartLocalPlayer()
         {
@@ -36,14 +32,17 @@ namespace GateCrashers
             // move
             float vertical = Input.GetAxis("Vertical");
             float horizontal = Input.GetAxis("Horizontal");
-            body.velocity = new Vector3(-horizontal* movementSpeed * Time.deltaTime,body.velocity.y,-vertical* movementSpeed * Time.deltaTime);
+            body.velocity = new Vector3(-horizontal* Model.movementSpeed * Time.deltaTime,body.velocity.y,-vertical* Model.movementSpeed * Time.deltaTime);
 
             animator.SetBool("Moving", body.velocity != Vector3.zero);
 
             // shoot
-            if (Input.GetKeyDown(jumpKey))
+            if (Input.GetKeyDown(Model.jumpKey))
             {
-                CmdJump();
+                if (Controller.Grounded(transform.position))
+                {
+                    CmdJump();
+                }
             }
         }
 
