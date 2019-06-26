@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class BaseCommand : NetworkBehaviour
 {
-    public virtual void predict(NetworkIdentity controlable,object[] parameters)
+    public virtual void predict(NetworkIdentity controlable)
     {
         return;
     }
-    public virtual void Cmdrequest(NetworkIdentity controlable,object[] parameters)
+    public virtual void Cmdrequest(NetworkIdentity controlable)
     {
         return;
     }
-    public virtual void Rpcexecute(NetworkIdentity controlable,object[] parameters)
+    public virtual void Rpcexecute(NetworkIdentity controlable)
     {
         return;
     }

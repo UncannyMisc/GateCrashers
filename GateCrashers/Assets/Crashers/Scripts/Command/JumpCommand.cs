@@ -5,24 +5,25 @@ using Mirror;
 
 public class JumpCommand : BaseCommand
 {
-    [Client]
-    public override void predict(NetworkIdentity controlable, object[] parameters)
+    [SyncVar]
+    private float jump;
+    
+    public override void predict(NetworkIdentity controlable)
     {
-        Vector3 temp = 
-            new Vector3(controlable.GetComponent<Rigidbody>().velocity.x,200,controlable.GetComponent<Rigidbody>().velocity.z);
-        controlable.GetComponent<Rigidbody>().velocity = temp;
-        object[] temp2 = { temp};
-        Cmdrequest(controlable,temp2);
+        jump = 10;
+        //controlable.GetComponent<Rigidbody>().velocity = new Vector3(controlable.GetComponent<Rigidbody>().velocity.x,jump,controlable.GetComponent<Rigidbody>().velocity.z);
+        Cmdrequest(controlable);
     }
     [Command]
-    public override void Cmdrequest(NetworkIdentity controlable,object[] parameters)
+    public override void Cmdrequest(NetworkIdentity controlable)
     {
-        Rpcexecute(controlable,parameters);
+        //controlable.GetComponent<Rigidbody>().velocity = jump;
+        Rpcexecute(controlable);
     }
     [ClientRpc]
-    public override void Rpcexecute(NetworkIdentity controlable,object[] parameters)
+    public override void Rpcexecute(NetworkIdentity controlable)
     {
-        controlable.GetComponent<Rigidbody>().velocity = 
-            new Vector3(controlable.GetComponent<Rigidbody>().velocity.x,200,controlable.GetComponent<Rigidbody>().velocity.z);
+        Debug.Log(jump+" weird");
+        controlable.GetComponent<Rigidbody>().AddForce(0,jump,0);
     }
 }

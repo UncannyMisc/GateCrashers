@@ -6,25 +6,31 @@ using UnityEngine.UIElements;
 
 public class MoveCommand : BaseCommand
 {
-    [Client]
-    public override void predict(NetworkIdentity controlable, object[] parameters)
+    public float movespeed;
+    public float horizontal;
+    public float vertical;
+
+    [SyncVar]
+    private Vector3 move;
+
+    public override void predict(NetworkIdentity controlable)
     {
-        Vector3 temp =
-            new Vector3(-(float)parameters[1]* (float)parameters[0] * Time.deltaTime,controlable.GetComponent<Rigidbody>().velocity.y,-(float)parameters[2]* (float)parameters[0] * Time.deltaTime);
-        controlable.GetComponent<Rigidbody>().velocity = temp;
-        object[] temp2 = {temp};
-        Cmdrequest(controlable,temp2);
+        move =
+            new Vector3(-horizontal* movespeed * Time.deltaTime,controlable.GetComponent<Rigidbody>().velocity.y,-vertical* movespeed * Time.deltaTime);
+        //controlable.GetComponent<Rigidbody>().velocity = move;
+        Cmdrequest(controlable);
     }
 
     [Command]
-    public override void Cmdrequest(NetworkIdentity controlable,object[] parameters)
+    public override void Cmdrequest(NetworkIdentity controlable)
     {
-        Rpcexecute(controlable,parameters);
+        //controlable.GetComponent<Rigidbody>().velocity = move;
+        Rpcexecute(controlable);
     }
     
     [ClientRpc]
-    public override void Rpcexecute(NetworkIdentity controlable,object[] parameters)
+    public override void Rpcexecute(NetworkIdentity controlable)
     {
-        controlable.GetComponent<Rigidbody>().velocity = (Vector3)parameters[0];
+        controlable.GetComponent<Rigidbody>().velocity = move;
     }
 }
