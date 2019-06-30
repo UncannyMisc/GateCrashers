@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 4492442352427800}
   - component: {fileID: 114118589361100106}
   - component: {fileID: 2240606817507776182}
-  - component: {fileID: 114250499875391520}
   - component: {fileID: 5194388907919410155}
   - component: {fileID: 670504288709316886}
   - component: {fileID: 3491021928090255200}
+  - component: {fileID: 202509364800572814}
   m_Layer: 0
   m_Name: CommandPawn
   m_TagString: Untagged
@@ -74,20 +74,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114250499875391520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1916082411674582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncInterval: 0
-  compressRotation: 1
 --- !u!135 &5194388907919410155
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -135,6 +121,20 @@ MonoBehaviour:
   animator: {fileID: 2240606817507776182}
   projectilePrefab: {fileID: 0}
   projectileMount: {fileID: 0}
+--- !u!114 &202509364800572814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916082411674582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ead235f0e63ebea44bf3212b4ce63587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncInterval: 0.1
+  compressRotation: 1
 --- !u!1 &4426914200102054949
 GameObject:
   m_ObjectHideFlags: 0

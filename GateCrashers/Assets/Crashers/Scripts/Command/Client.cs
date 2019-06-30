@@ -17,6 +17,7 @@ public class Client : NetworkBehaviour
     public string vertAxis = "Vertical";
     public string horiAxis = "Horizontal";
     public MoveCommand moveCom;
+    public bool jumping = false;
 
     [Header("Possessions")]
     public BaseControlable pawn;
@@ -41,12 +42,15 @@ public class Client : NetworkBehaviour
         //CmdSetupPawn();
     }
 
+    #region Setuppawnandcamera
+
     [Client]
     public void SetupPawn(NetworkIdentity a)
     {
         if (isLocalPlayer) Debug.Log("client");
         //GameObject temp = Instantiate(startPlayerPrefab, transform.position, transform.rotation);
         pawn = a.GetComponent<BaseControlable>();
+        pawn.OnPosses(this);
         CmdSetupPawn(a);
         //NetworkServer.Spawn(temp);
         //RpcSetupPawn( temp.GetComponent<NetworkIdentity>());
@@ -57,6 +61,7 @@ public class Client : NetworkBehaviour
     {
         if (isLocalPlayer) Debug.Log("server");
         pawn = a.GetComponent<BaseControlable>();
+        pawn.OnPosses(this);
         RpcSetupPawn(a);
     }
 
@@ -64,6 +69,7 @@ public class Client : NetworkBehaviour
     public void RpcSetupPawn(NetworkIdentity a)
     {
         pawn = a.GetComponent<BaseControlable>();
+        pawn.OnPosses(this);
         if (isLocalPlayer)
         {
             this.ClientCamera = GameObject.FindWithTag("MainCamera").transform.parent.gameObject;
@@ -71,7 +77,15 @@ public class Client : NetworkBehaviour
             ClientCamera.transform.SetParent(pawn.transform);
         }
     }
-    
+    #endregion
+
+    private void OnDestroy()
+    {
+        // if local, set the camera free
+        if(ClientCamera!=null)
+            ClientCamera.transform.SetParent(null);
+    }
+
     void FixedUpdate()
     {
         // movement for local player
@@ -80,24 +94,30 @@ public class Client : NetworkBehaviour
         // move
         float vertical = Input.GetAxis(vertAxis);
         float horizontal = Input.GetAxis(horiAxis);
+        moveCom.Cmdsyncinput(horizontal,vertical, pawn.movementSpeed);
         if (vertical != 0 || horizontal != 0)
         {
-            moveCom.vertical = vertical;
-            moveCom.horizontal = horizontal;
-            moveCom.movespeed = pawn.movementSpeed;
-            moveCom.predict(pawn.netIdentity);
+            pawn.moveStrat.execute(Time.deltaTime,pawn.GetComponent<Rigidbody>(),new Vector3(horizontal,0,vertical));
+            //moveCom.predict(pawn.netIdentity);
         }
 
-        // shoot
-        if (Input.GetKeyDown(jumpKey))
+        RaycastHit hit;
+        Physics.Raycast(pawn.GetComponent<Rigidbody>().position, Vector3.down, out hit, 0.4f);
+        if (hit.collider)
         {
-            // test for ground
-            RaycastHit hit;
-            Physics.Raycast(pawn.transform.position,Vector3.down,out hit, 2);
-            if (hit.collider)
+            if (!jumping)
             {
-                jumpCom.predict(pawn.netIdentity);
+                // jump
+                if (Input.GetKeyDown(jumpKey)&&hit.collider)
+                {
+                    pawn.jumpStrat.execute(Time.deltaTime,pawn.GetComponent<Rigidbody>(),hit.collider);
+                    jumping = true;
+                }
             }
+        }
+        else if(jumping)
+        {
+            jumping = false;
         }
     }
 }

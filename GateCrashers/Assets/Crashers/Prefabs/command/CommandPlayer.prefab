@@ -48,8 +48,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serverOnly: 0
   localPlayerAuthority: 1
-  m_AssetId: bb03abcb97dcbd04081150aa3ed98478
-  m_SceneId: 0
+  m_AssetId: 
+  m_SceneId: 2821652633
 --- !u!114 &1387218129377626578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,7 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44f3f8c8135b569428d75df1592b65f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncInterval: 0.1
+  syncInterval: 0
   movespeed: 0
   horizontal: 0
   vertical: 0
@@ -100,4 +100,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e54464be4830954ba3a6726a122bbbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncInterval: 0.1
+  syncInterval: 0

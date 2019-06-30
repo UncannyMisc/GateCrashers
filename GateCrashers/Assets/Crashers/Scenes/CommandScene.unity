@@ -221,7 +221,6 @@ GameObject:
   - component: {fileID: 950953150}
   - component: {fileID: 950953149}
   - component: {fileID: 950953148}
-  - component: {fileID: 950953155}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -238,9 +237,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 950953147}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3947e19b8259b9747ba2b967b2d223c2, type: 3}
+  m_Script: {fileID: 11500000, guid: ead235f0e63ebea44bf3212b4ce63587, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncInterval: 0.1
+  compressRotation: 1
 --- !u!114 &950953149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,20 +346,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &950953155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 950953147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncInterval: 0.1
-  compressRotation: 1
 --- !u!1 &1107091652
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,7 +556,7 @@ MonoBehaviour:
   runInBackground: 1
   startOnHeadless: 1
   serverTickRate: 30
-  showDebugMessages: 1
+  showDebugMessages: 0
   offlineScene: 
   onlineScene: 
   transport: {fileID: 1282001521}
@@ -581,7 +568,7 @@ MonoBehaviour:
   playerSpawnMethod: 1
   spawnPrefabs:
   - {fileID: 1916082411674582, guid: 4ae06a99ba50ab74185df27ea90b2440, type: 3}
-  playerClientPrefab: {fileID: 1916082411674582, guid: 4ae06a99ba50ab74185df27ea90b2440,
+  playerPawnPrefab: {fileID: 1916082411674582, guid: 4ae06a99ba50ab74185df27ea90b2440,
     type: 3}
 --- !u!1 &1458789072
 GameObject:

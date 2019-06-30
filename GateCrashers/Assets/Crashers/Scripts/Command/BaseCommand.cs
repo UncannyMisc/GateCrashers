@@ -9,10 +9,13 @@ public class BaseCommand : NetworkBehaviour
     {
         return;
     }
+    
+    [Command]
     public virtual void Cmdrequest(NetworkIdentity controlable)
     {
         return;
     }
+    [ClientRpc]
     public virtual void Rpcexecute(NetworkIdentity controlable)
     {
         return;

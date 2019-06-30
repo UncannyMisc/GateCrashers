@@ -8,7 +8,7 @@ public class CrasherManager : NetworkManager
 {
     
     [Header("Spawn Info")]
-    [FormerlySerializedAs("m_PlayerClientPrefab")] public GameObject playerClientPrefab;
+    [FormerlySerializedAs("m_PlayerClientPrefab")] public GameObject playerPawnPrefab;
     
     public override void OnValidate()
     {
@@ -29,11 +29,11 @@ public class CrasherManager : NetworkManager
 
         maxConnections = Mathf.Max(maxConnections, 0); // always >= 0
 
-        if (playerPrefab != null && playerPrefab.GetComponent<NetworkIdentity>() == null&&playerClientPrefab != null && playerClientPrefab.GetComponent<NetworkIdentity>() == null)
+        if (playerPrefab != null && playerPrefab.GetComponent<NetworkIdentity>() == null&&playerPawnPrefab != null && playerPawnPrefab.GetComponent<NetworkIdentity>() == null)
         {
             Debug.LogError("NetworkManager - playerPrefab & playerClientPrefab must have a NetworkIdentity.");
             playerPrefab = null;
-            playerClientPrefab = null;
+            playerPawnPrefab = null;
         }
     }
     
@@ -52,13 +52,13 @@ public class CrasherManager : NetworkManager
             Debug.LogError("The PlayerPrefab does not have a NetworkIdentity. Please add a NetworkIdentity to the player prefab.");
             return;
         }
-        if (playerClientPrefab == null)
+        if (playerPawnPrefab == null)
         {
             Debug.LogError("The PlayerClientPrefab is empty on the NetworkManager. Please setup a PlayerPrefab object.");
             return;
         }
 
-        if (playerClientPrefab.GetComponent<NetworkIdentity>() == null)
+        if (playerPawnPrefab.GetComponent<NetworkIdentity>() == null)
         {
             Debug.LogError("The PlayerClientPrefab does not have a NetworkIdentity. Please add a NetworkIdentity to the player prefab.");
             return;
@@ -74,12 +74,23 @@ public class CrasherManager : NetworkManager
         GameObject player = startPos != null
             ? Instantiate(playerPrefab, startPos.position, startPos.rotation)
             : Instantiate(playerPrefab);
-        GameObject playerClient = startPos != null
-            ? Instantiate(playerClientPrefab, startPos.position, startPos.rotation)
-            : Instantiate(playerClientPrefab);
+        GameObject playerPawn = startPos != null
+            ? Instantiate(playerPawnPrefab, startPos.position, startPos.rotation)
+            : Instantiate(playerPawnPrefab);
 
         NetworkServer.AddPlayerForConnection(conn, player);
-        NetworkServer.SpawnWithClientAuthority(playerClient,conn);
-        player.GetComponent<Client>().SetupPawn(playerClient.GetComponent<NetworkIdentity>());
+        NetworkServer.SpawnWithClientAuthority(playerPawn,conn);
+        player.GetComponent<Client>().SetupPawn(playerPawn.GetComponent<NetworkIdentity>());
+    }
+    public override void OnServerDisconnect(NetworkConnection conn)
+    {
+        GameObject temp = conn.playerController.GetComponent<Client>().pawn.gameObject;
+        
+        // destroy player pawn
+        if (temp != null)
+            NetworkServer.Destroy(temp);
+
+        // call base functionality (actually destroys the player)
+        base.OnServerDisconnect(conn);
     }
 }
