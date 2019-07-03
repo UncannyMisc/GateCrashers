@@ -29,6 +29,8 @@ namespace GateCrashers
             }
             moveStrat = new MoveStrat();
             jumpStrat = new JumpStrat();
+            interactStrat = new InteractStrat();
+             
             //todo make a new interface or struct containing information about the control scheme and update client
         }
 

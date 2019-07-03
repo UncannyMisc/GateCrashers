@@ -10,5 +10,6 @@ public abstract class BaseControlable : NetworkBehaviour
     [Header("CommandStrategies")]
     public IComStrat<Rigidbody,Vector3> moveStrat;
     public IComStrat<Rigidbody,bool> jumpStrat;
+    public IComStrat<NetworkIdentity,NetworkIdentity> interactStrat;
     public abstract void OnPosses(Client C);
 }

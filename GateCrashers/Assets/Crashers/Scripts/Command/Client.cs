@@ -12,11 +12,10 @@ public class Client : NetworkBehaviour
     
     [Header("Key Bindings")]
     public KeyCode jumpKey = KeyCode.Space;
-    public JumpCommand jumpCom;
+    public KeyCode interactKey = KeyCode.Mouse0;
 
     public string vertAxis = "Vertical";
     public string horiAxis = "Horizontal";
-    public MoveCommand moveCom;
     public bool jumping = false;
 
     [Header("Possessions")]
@@ -94,7 +93,6 @@ public class Client : NetworkBehaviour
         // move
         float vertical = Input.GetAxis(vertAxis);
         float horizontal = Input.GetAxis(horiAxis);
-        moveCom.Cmdsyncinput(horizontal,vertical, pawn.movementSpeed);
         if (vertical != 0 || horizontal != 0)
         {
             pawn.moveStrat.execute(Time.deltaTime,pawn.GetComponent<Rigidbody>(),new Vector3(horizontal,0,vertical));
@@ -119,5 +117,16 @@ public class Client : NetworkBehaviour
         {
             jumping = false;
         }
+
+        if (Input.GetKeyDown(interactKey))
+        {
+            PickUp temp = FindObjectOfType<PickUp>();
+            temp.Check(this.netIdentity, this);
+        }
+    }
+
+    public void PickUpCall(NetworkIdentity other)
+    {
+        pawn.interactStrat.execute(Time.deltaTime,pawn.netIdentity,other);
     }
 }
