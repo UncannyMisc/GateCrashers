@@ -11,6 +11,8 @@ public class InteractStrat : IComStrat<NetworkIdentity,NetworkIdentity>
         temp.position = Vector3.Lerp(temp.position,pawn.GetComponent<Rigidbody>().position+Vector3.up*2,Time.deltaTime);
     }
 
+    //add a way to make the temp.pos be called on an update
+    
     /*pick up box
     [Command]
     public void CmdPickup(NetworkIdentity pawn, NetworkIdentity values)
