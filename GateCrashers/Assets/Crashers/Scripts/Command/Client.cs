@@ -126,7 +126,7 @@ public class Client : NetworkBehaviour
             {
                 if (!temp.held)
                 {
-                    if (pawn.close) temp.CmdCheck(this.netIdentity, pawn.netIdentity);
+                    if (pawn.close) temp.Check(this.netIdentity, pawn.netIdentity);
                 }
                 else
                 {
@@ -134,7 +134,7 @@ public class Client : NetworkBehaviour
                 }
                 
             }
-            else temp.CmdCheck(this.netIdentity, pawn.netIdentity);
+            else temp.Check(this.netIdentity, pawn.netIdentity);
         }
         
         //hold the item

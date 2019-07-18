@@ -14,8 +14,8 @@ public class PickUp : NetworkBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
-    [Command]
-    public void CmdCheck(NetworkIdentity other, NetworkIdentity pawn)
+    //[Command]
+    public void Check(NetworkIdentity other, NetworkIdentity pawn)
     {
         
         if (held == true)
