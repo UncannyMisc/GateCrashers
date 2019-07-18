@@ -17,7 +17,7 @@ public class JumpStrat : IComStrat<Rigidbody,bool>
     public void Held(float totaltimedelta,Rigidbody body,bool values)
     {
     }
-    public void NotHeld(float totaltimedelta, Rigidbody body, bool values)
+    public void Update(float totaltimedelta, Rigidbody body, bool values)
     {
     }
 

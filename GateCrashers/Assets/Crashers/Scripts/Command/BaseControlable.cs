@@ -12,4 +12,7 @@ public abstract class BaseControlable : NetworkBehaviour
     public IComStrat<Rigidbody,bool> jumpStrat;
     public IComStrat<NetworkIdentity,NetworkIdentity> interactStrat;
     public abstract void OnPosses(Client C);
+    
+    public bool holding = false;
+
 }

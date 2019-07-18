@@ -8,7 +8,7 @@ namespace GateCrashers
         [Header("Components")]
         public Rigidbody body;
         public Animator animator;
-        
+
         public override void OnStartLocalPlayer()
         {
             Debug.Log("run");

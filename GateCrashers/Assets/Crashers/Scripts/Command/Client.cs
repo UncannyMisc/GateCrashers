@@ -20,7 +20,7 @@ public class Client : NetworkBehaviour
 
     [Header("Possessions")]
     public BaseControlable pawn;
-    
+
     
     public override void OnStartLocalPlayer()
     {
@@ -118,20 +118,30 @@ public class Client : NetworkBehaviour
             jumping = false;
         }
 
+        //pick up the item
         if (Input.GetKeyDown(interactKey))
+        {   
+            //input distance stuff
+            PickUp temp = FindObjectOfType<PickUp>();
+            temp.CmdCheck(this.netIdentity, this);
+        }
+        
+        //hold the item
+        if (pawn.holding)
         {
             PickUp temp = FindObjectOfType<PickUp>();
-            temp.Check(this.netIdentity, this);
-            //pawn.InteractStrat.JustPressed
-        }
-        else if (Input.GetKey(interactKey))
-        {
-            //pawn.InteractStrat.Held
+            //make the item get picked up
+            pawn.interactStrat.Update(Time.deltaTime, pawn.netIdentity, temp.netIdentity);
         }
     }
 
-    public void PickUpCall(NetworkIdentity other)
+    public void PickUpCall()
     {
-        pawn.interactStrat.Held(Time.deltaTime,pawn.netIdentity,other);
+        pawn.holding = true;
+    }
+
+    public void DropCall()
+    {
+        pawn.holding = false;
     }
 }

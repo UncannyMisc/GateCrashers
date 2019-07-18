@@ -13,23 +13,26 @@ public class PickUp : NetworkBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
-    
-    public void Check(NetworkIdentity other, Client pawn)
+    [Command]
+    public void CmdCheck(NetworkIdentity other, Client pawn)
     {
         if (held == true)
         {
             //item is dropped
-            rb.isKinematic = true;    
+            rb.isKinematic = false;
+            rb.useGravity = true;
             held = false;
             holder = null;
+            pawn.DropCall();
         }
         else
         {
             //item is picked up
             rb.isKinematic = false;
+            rb.useGravity = false;
             held = true;
             holder = other;
-            pawn.PickUpCall(this.netIdentity);
+            pawn.PickUpCall();
         }
     }
 }

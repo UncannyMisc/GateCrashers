@@ -19,7 +19,7 @@ public class MoveStrat : IComStrat<Rigidbody,Vector3>
             new Vector3(-values.x* movespeed * Time.deltaTime,body.velocity.y,-values.z* movespeed * Time.deltaTime);
     }
 
-    public void NotHeld(float totaltimedelta, Rigidbody pawn, Vector3 values)
+    public void Update(float totaltimedelta, Rigidbody pawn, Vector3 values)
     {
     }
 
