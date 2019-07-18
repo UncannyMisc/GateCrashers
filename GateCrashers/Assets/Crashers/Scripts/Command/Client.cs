@@ -85,7 +85,7 @@ public class Client : NetworkBehaviour
             ClientCamera.transform.SetParent(null);
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // movement for local player
         if (!isLocalPlayer) return;

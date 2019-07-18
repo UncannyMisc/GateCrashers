@@ -30,7 +30,7 @@ public class PickUp : NetworkBehaviour
         else
         {
             //item is picked up
-            rb.isKinematic = false;
+            rb.isKinematic = true;
             rb.useGravity = false;
             held = true;
             holder = other;
