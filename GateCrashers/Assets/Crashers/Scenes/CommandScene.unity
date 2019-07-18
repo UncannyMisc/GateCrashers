@@ -221,7 +221,6 @@ GameObject:
   - component: {fileID: 950953150}
   - component: {fileID: 950953149}
   - component: {fileID: 950953148}
-  - component: {fileID: 950953155}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -238,12 +237,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 950953147}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3947e19b8259b9747ba2b967b2d223c2, type: 3}
+  m_Script: {fileID: 11500000, guid: ead235f0e63ebea44bf3212b4ce63587, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncInterval: 0.1
-  Col: {fileID: 950953151}
-  body: {fileID: 950953150}
+  compressRotation: 1
 --- !u!114 &950953149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,7 +257,7 @@ MonoBehaviour:
   serverOnly: 0
   localPlayerAuthority: 0
   m_AssetId: 
-  m_SceneId: 242232871
+  m_SceneId: 183613043
 --- !u!54 &950953150
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -348,20 +346,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &950953155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 950953147}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncInterval: 0.1
-  compressRotation: 1
 --- !u!1 &1107091652
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,7 +447,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1282001518}
-  - component: {fileID: 1282001520}
+  - component: {fileID: 1282001522}
   - component: {fileID: 1282001519}
   - component: {fileID: 1282001521}
   m_Layer: 0
@@ -502,34 +486,6 @@ MonoBehaviour:
   showGUI: 1
   offsetX: 0
   offsetY: 0
---- !u!114 &1282001520
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1282001517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8aab4c8111b7c411b9b92cf3dbc5bd4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dontDestroyOnLoad: 1
-  runInBackground: 1
-  startOnHeadless: 1
-  serverTickRate: 30
-  showDebugMessages: 0
-  offlineScene: 
-  onlineScene: 
-  transport: {fileID: 1282001521}
-  networkAddress: localhost
-  maxConnections: 4
-  playerPrefab: {fileID: 1916082411674582, guid: 81d905b9f90c9684cb22e8b0578495d9,
-    type: 3}
-  autoCreatePlayer: 1
-  playerSpawnMethod: 1
-  spawnPrefabs:
-  - {fileID: 5890560936853567077, guid: b7dd46dbf38c643f09e206f9fa4be008, type: 3}
 --- !u!114 &1282001521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,6 +540,36 @@ MonoBehaviour:
   NoDelay: 1
   serverMaxMessageSize: 16384
   clientMaxMessageSize: 16384
+--- !u!114 &1282001522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282001517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b707d367c4e45243b12c58c6db71a3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 1
+  runInBackground: 1
+  startOnHeadless: 1
+  serverTickRate: 30
+  showDebugMessages: 0
+  offlineScene: 
+  onlineScene: 
+  transport: {fileID: 1282001521}
+  networkAddress: localhost
+  maxConnections: 4
+  playerPrefab: {fileID: 1916082411674582, guid: bb03abcb97dcbd04081150aa3ed98478,
+    type: 3}
+  autoCreatePlayer: 1
+  playerSpawnMethod: 1
+  spawnPrefabs:
+  - {fileID: 1916082411674582, guid: 4ae06a99ba50ab74185df27ea90b2440, type: 3}
+  playerPawnPrefab: {fileID: 1916082411674582, guid: 4ae06a99ba50ab74185df27ea90b2440,
+    type: 3}
 --- !u!1 &1458789072
 GameObject:
   m_ObjectHideFlags: 0
