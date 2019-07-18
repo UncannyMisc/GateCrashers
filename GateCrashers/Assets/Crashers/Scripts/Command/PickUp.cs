@@ -50,11 +50,17 @@ public class PickUp : NetworkBehaviour
     //makes sure the player is close enough to be able to pick it up
     private void OnTriggerEnter(Collider other)
     {
-        other.GetComponent<BaseControlable>().close = true;
+        if (other.GetComponent<BaseControlable>() != null)
+        {
+            other.GetComponent<BaseControlable>().close = true;
+        }
     }
     
     private void OnTriggerExit(Collider other)
     {
-        other.GetComponent<BaseControlable>().close = false;
+        if (other.GetComponent<BaseControlable>() != null)
+        {
+            other.GetComponent<BaseControlable>().close = true;
+        }
     }
 }
