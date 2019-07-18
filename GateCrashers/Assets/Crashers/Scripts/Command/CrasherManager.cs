@@ -9,6 +9,8 @@ public class CrasherManager : NetworkManager
     
     [Header("Spawn Info")]
     [FormerlySerializedAs("m_PlayerClientPrefab")] public GameObject playerPawnPrefab;
+    public GameObject BeerCratePrefab;
+    public GameObject ActiveBeerCrate;
     
     public override void OnValidate()
     {
@@ -81,6 +83,17 @@ public class CrasherManager : NetworkManager
         NetworkServer.AddPlayerForConnection(conn, player);
         NetworkServer.SpawnWithClientAuthority(playerPawn,conn);
         player.GetComponent<Client>().SetupPawn(playerPawn.GetComponent<NetworkIdentity>());
+        // spawn ball if two players
+        if (numPlayers == 1)
+        {
+            ActiveBeerCrate = Instantiate(BeerCratePrefab);
+            NetworkServer.Spawn(ActiveBeerCrate);
+        }
+        else if(numPlayers>1&& !ActiveBeerCrate)
+        {
+            ActiveBeerCrate = Instantiate(BeerCratePrefab);
+            NetworkServer.Spawn(ActiveBeerCrate);
+        }
     }
     public override void OnServerDisconnect(NetworkConnection conn)
     {
