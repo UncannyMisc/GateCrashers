@@ -38,6 +38,15 @@ public class PickUp : NetworkBehaviour
         }
     }
 
+    public void Drop()
+    {
+        holder.GetComponent<BaseControlable>().holding = false;
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        held = false;
+        holder = null;
+    }
+
     //makes sure the player is close enough to be able to pick it up
     private void OnTriggerEnter(Collider other)
     {

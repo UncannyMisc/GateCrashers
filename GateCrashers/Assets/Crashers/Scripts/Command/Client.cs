@@ -130,7 +130,7 @@ public class Client : NetworkBehaviour
                 }
                 else
                 {
-                    //this is were the struggling would happen
+                    temp.Drop();
                 }
                 
             }
