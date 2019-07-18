@@ -123,7 +123,7 @@ public class Client : NetworkBehaviour
         {   
             //input distance stuff
             PickUp temp = FindObjectOfType<PickUp>();
-            temp.CmdCheck(this.netIdentity, this);
+            temp.CmdCheck(this.netIdentity, pawn.netIdentity);
         }
         
         //hold the item
@@ -134,6 +134,8 @@ public class Client : NetworkBehaviour
             pawn.interactStrat.Update(Time.deltaTime, pawn.netIdentity, temp.netIdentity);
         }
     }
+    
+    
 
     public void PickUpCall()
     {

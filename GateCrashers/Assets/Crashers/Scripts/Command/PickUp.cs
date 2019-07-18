@@ -5,6 +5,7 @@ using Mirror;
 
 public class PickUp : NetworkBehaviour
 {
+    [SyncVar]
     public bool held = false; //if the pickup is being held
     public NetworkIdentity holder; //whose holding the pickup
     private Rigidbody rb;
@@ -14,8 +15,9 @@ public class PickUp : NetworkBehaviour
         rb = GetComponent<Rigidbody>();
     }
     [Command]
-    public void CmdCheck(NetworkIdentity other, Client pawn)
+    public void CmdCheck(NetworkIdentity other, NetworkIdentity pawn)
     {
+        
         if (held == true)
         {
             //item is dropped
@@ -23,7 +25,7 @@ public class PickUp : NetworkBehaviour
             rb.useGravity = true;
             held = false;
             holder = null;
-            pawn.DropCall();
+            pawn.GetComponent<BaseControlable>().holding = false;
         }
         else
         {
@@ -32,7 +34,7 @@ public class PickUp : NetworkBehaviour
             rb.useGravity = false;
             held = true;
             holder = other;
-            pawn.PickUpCall();
+            pawn.GetComponent<BaseControlable>().holding = true;
         }
     }
 }

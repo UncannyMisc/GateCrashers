@@ -13,6 +13,7 @@ public abstract class BaseControlable : NetworkBehaviour
     public IComStrat<NetworkIdentity,NetworkIdentity> interactStrat;
     public abstract void OnPosses(Client C);
     
+    [SyncVar]
     public bool holding = false;
 
 }
