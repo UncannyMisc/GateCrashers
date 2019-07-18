@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
@@ -95,7 +95,7 @@ public class Client : NetworkBehaviour
         float horizontal = Input.GetAxis(horiAxis);
         if (vertical != 0 || horizontal != 0)
         {
-            pawn.moveStrat.execute(Time.deltaTime,pawn.GetComponent<Rigidbody>(),new Vector3(horizontal,0,vertical));
+            pawn.moveStrat.Held(Time.deltaTime,pawn.GetComponent<Rigidbody>(),new Vector3(horizontal,0,vertical));
             //moveCom.predict(pawn.netIdentity);
         }
 
@@ -108,7 +108,7 @@ public class Client : NetworkBehaviour
                 // jump
                 if (Input.GetKeyDown(jumpKey)&&hit.collider)
                 {
-                    pawn.jumpStrat.execute(Time.deltaTime,pawn.GetComponent<Rigidbody>(),hit.collider);
+                    pawn.jumpStrat.JustPressed(Time.deltaTime,pawn.GetComponent<Rigidbody>(),hit.collider);
                     jumping = true;
                 }
             }
@@ -122,11 +122,16 @@ public class Client : NetworkBehaviour
         {
             PickUp temp = FindObjectOfType<PickUp>();
             temp.Check(this.netIdentity, this);
+            //pawn.InteractStrat.JustPressed
+        }
+        else if (Input.GetKey(interactKey))
+        {
+            //pawn.InteractStrat.Held
         }
     }
 
     public void PickUpCall(NetworkIdentity other)
     {
-        pawn.interactStrat.execute(Time.deltaTime,pawn.netIdentity,other);
+        pawn.interactStrat.Held(Time.deltaTime,pawn.netIdentity,other);
     }
 }

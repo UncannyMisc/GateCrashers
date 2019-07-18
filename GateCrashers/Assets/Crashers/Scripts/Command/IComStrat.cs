@@ -4,5 +4,8 @@ using UnityEngine;
 
 public interface IComStrat<T,V>
 {
-    void execute(float totaltimedelta,T pawn, V values);
+    void JustPressed(float totaltimedelta,T pawn, V values);
+    void JustReleased(float totaltimedelta,T pawn, V values);
+    void Held(float totaltimedelta,T pawn, V values);
+    void NotHeld(float totaltimedelta,T pawn, V values);
 }
