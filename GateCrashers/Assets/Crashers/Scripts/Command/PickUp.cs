@@ -37,4 +37,15 @@ public class PickUp : NetworkBehaviour
             pawn.GetComponent<BaseControlable>().holding = true;
         }
     }
+
+    //makes sure the player is close enough to be able to pick it up
+    private void OnTriggerEnter(Collider other)
+    {
+        other.GetComponent<BaseControlable>().close = true;
+    }
+    
+    private void OnTriggerExit(Collider other)
+    {
+        other.GetComponent<BaseControlable>().close = false;
+    }
 }

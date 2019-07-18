@@ -15,5 +15,6 @@ public abstract class BaseControlable : NetworkBehaviour
     
     [SyncVar]
     public bool holding = false;
+    public bool close = false;
 
 }

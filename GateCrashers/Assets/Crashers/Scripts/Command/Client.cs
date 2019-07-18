@@ -120,10 +120,21 @@ public class Client : NetworkBehaviour
 
         //pick up the item
         if (Input.GetKeyDown(interactKey))
-        {   
-            //input distance stuff
+        {
             PickUp temp = FindObjectOfType<PickUp>();
-            temp.CmdCheck(this.netIdentity, pawn.netIdentity);
+            if (!pawn.holding)
+            {
+                if (!temp.held)
+                {
+                    if (pawn.close) temp.CmdCheck(this.netIdentity, pawn.netIdentity);
+                }
+                else
+                {
+                    //this is were the struggling would happen
+                }
+                
+            }
+            else temp.CmdCheck(this.netIdentity, pawn.netIdentity);
         }
         
         //hold the item
@@ -133,17 +144,5 @@ public class Client : NetworkBehaviour
             //make the item get picked up
             pawn.interactStrat.Update(Time.deltaTime, pawn.netIdentity, temp.netIdentity);
         }
-    }
-    
-    
-
-    public void PickUpCall()
-    {
-        pawn.holding = true;
-    }
-
-    public void DropCall()
-    {
-        pawn.holding = false;
     }
 }
