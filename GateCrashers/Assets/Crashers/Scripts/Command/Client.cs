@@ -21,9 +21,15 @@ public class Client : NetworkBehaviour
     [Header("Possessions")]
     public BaseControlable pawn;
 
-    
+    [Header("Rotating")] 
+    public GameObject meshOwner;
+    public GameObject meshObj;
+
+
     public override void OnStartLocalPlayer()
     {
+        meshObj = meshOwner.transform.GetChild(0).gameObject;
+        
         // movement for local player
         if (!isLocalPlayer) return;
         bool temp = true;
@@ -96,11 +102,13 @@ public class Client : NetworkBehaviour
         if (pawn.holding)
         {
             //move set weird
-            vertical = vertical + Mathf.PerlinNoise(Time.time, 1);
-            horizontal = horizontal + Mathf.PerlinNoise(Time.time * 2, 1);
+            vertical = vertical + ((Mathf.PerlinNoise(Time.time, 1) - 0.5f)*2);
+            horizontal = horizontal + ((Mathf.PerlinNoise(Time.time * 2, 1) - 0.5f)*2);
             
             //mess with mesh
-            
+            meshObj.transform.Rotate(horizontal, 0, vertical);
+
+
 
         }
         

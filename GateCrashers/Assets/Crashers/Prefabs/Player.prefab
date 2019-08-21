@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: 7992003249446769357}
   - component: {fileID: 2780328711227239480}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: meshObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 4492442352427800}
   - component: {fileID: 114118589361100106}
   - component: {fileID: 1387218129377626578}
-  - component: {fileID: 272300425791855182}
-  - component: {fileID: 2101551873483580278}
   m_Layer: 0
   m_Name: CommandPlayer
   m_TagString: Untagged
@@ -48,8 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serverOnly: 0
   localPlayerAuthority: 1
-  m_AssetId: 
-  m_SceneId: 2821652633
+  m_AssetId: 81d905b9f90c9684cb22e8b0578495d9
+  m_SceneId: 0
 --- !u!114 &1387218129377626578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,37 +65,10 @@ MonoBehaviour:
   startPlayerPrefab: {fileID: 1916082411674582, guid: 4ae06a99ba50ab74185df27ea90b2440,
     type: 3}
   jumpKey: 32
-  jumpCom: {fileID: 2101551873483580278}
+  interactKey: 323
   vertAxis: Vertical
   horiAxis: Horizontal
-  moveCom: {fileID: 272300425791855182}
+  jumping: 0
   pawn: {fileID: 0}
---- !u!114 &272300425791855182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1916082411674582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44f3f8c8135b569428d75df1592b65f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncInterval: 0
-  movespeed: 0
-  horizontal: 0
-  vertical: 0
---- !u!114 &2101551873483580278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1916082411674582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e54464be4830954ba3a6726a122bbbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncInterval: 0
+  meshOwner: {fileID: 1916082411674582, guid: 81d905b9f90c9684cb22e8b0578495d9, type: 3}
+  meshObj: {fileID: 0}
