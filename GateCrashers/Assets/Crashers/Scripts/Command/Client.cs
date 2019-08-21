@@ -25,6 +25,11 @@ public class Client : NetworkBehaviour
     public GameObject meshOwner;
     public GameObject meshObj;
 
+    [SyncVar]
+    public int score = 0;
+
+    public float time = 0;
+
 
     public override void OnStartLocalPlayer()
     {
@@ -104,6 +109,27 @@ public class Client : NetworkBehaviour
         // movement for local player
         if (!isLocalPlayer) return;
 
+        if (score < 99)
+        {
+            if (pawn.holding)
+            {
+                if (time >= 2)
+                {
+                    time = 0;
+                    score++;
+                }
+
+                time += Time.deltaTime;
+            }
+            else
+            {
+                time = 0;
+            }
+        }
+        else
+        {
+            
+        }
         float vertical = Input.GetAxis(vertAxis);
         float horizontal = Input.GetAxis(horiAxis);
         
@@ -115,9 +141,6 @@ public class Client : NetworkBehaviour
             
             //mess with mesh
             meshObj.transform.Rotate(horizontal, 0, vertical);
-
-
-
         }
         
         //actual movement
