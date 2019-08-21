@@ -93,6 +93,14 @@ public class Client : NetworkBehaviour
 
     void Update()
     {
+        //hold the item
+        if (pawn&&pawn.holding)
+        {
+            PickUp temp = FindObjectOfType<PickUp>();
+            //make the item get picked up
+            pawn.interactStrat.Update(Time.deltaTime, pawn.netIdentity, temp.netIdentity);
+        }
+        
         // movement for local player
         if (!isLocalPlayer) return;
 
@@ -143,28 +151,26 @@ public class Client : NetworkBehaviour
         //pick up the item
         if (Input.GetKeyDown(interactKey))
         {
-            PickUp temp = FindObjectOfType<PickUp>();
-            if (!pawn.holding)
-            {
-                if (!temp.held)
-                {
-                    if (pawn.close) temp.CmdCheck(this.netIdentity, pawn.netIdentity);
-                }
-                else
-                {
-                    temp.CmdDrop();
-                }
-                
-            }
-            else temp.CmdCheck(this.netIdentity, pawn.netIdentity);
+            Cmdpickup();
         }
-        
-        //hold the item
-        if (pawn.holding)
+    }
+
+    [Command]
+    public void Cmdpickup()
+    {
+        PickUp temp = FindObjectOfType<PickUp>();
+        if (!pawn.holding)
         {
-            PickUp temp = FindObjectOfType<PickUp>();
-            //make the item get picked up
-            pawn.interactStrat.Update(Time.deltaTime, pawn.netIdentity, temp.netIdentity);
+            if (!temp.held)
+            {
+                if (pawn.close) temp.Check(this.netIdentity, pawn.netIdentity);
+            }
+            else
+            {
+                temp.Drop();
+            }
+                
         }
+        else temp.Check(this.netIdentity, pawn.netIdentity);
     }
 }
