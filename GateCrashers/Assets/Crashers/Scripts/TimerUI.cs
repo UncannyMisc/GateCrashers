@@ -5,19 +5,22 @@ using TMPro;
 
 public class TimerUI : MonoBehaviour
 {
-    private TextMeshPro score;
+    public TextMeshProUGUI score;
     public Client client;
     
     
     // Start is called before the first frame update
     void Start()
     {
-        score = GetComponent<TextMeshPro>();
+        score = GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        score.SetText(client.score + "/99");
+        if (client)
+        {
+            score.SetText(client.score + "/99");
+        }
     }
 }
