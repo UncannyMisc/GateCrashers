@@ -7,6 +7,7 @@ public class PickUp : NetworkBehaviour
 {
     [SyncVar]
     public bool held = false; //if the pickup is being held
+    [SyncVar]
     public NetworkIdentity holder; //whose holding the pickup
     private Rigidbody rb;
 
@@ -14,11 +15,11 @@ public class PickUp : NetworkBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
-    //[Command]
-    public void Check(NetworkIdentity other, NetworkIdentity pawn)
+    [Command]
+    public void CmdCheck(NetworkIdentity other, NetworkIdentity pawn)
     {
-        
-        if (held == true)
+        Debug.Log("check");
+        if (held)
         {
             //item is dropped
             rb.isKinematic = false;
@@ -38,7 +39,8 @@ public class PickUp : NetworkBehaviour
         }
     }
 
-    public void Drop()
+    [Command]
+    public void CmdDrop()
     {
         holder.GetComponent<BaseControlable>().holding = false;
         rb.isKinematic = false;
