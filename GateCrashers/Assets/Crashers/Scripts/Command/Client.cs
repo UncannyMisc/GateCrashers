@@ -90,12 +90,26 @@ public class Client : NetworkBehaviour
         // movement for local player
         if (!isLocalPlayer) return;
 
-        // move
         float vertical = Input.GetAxis(vertAxis);
         float horizontal = Input.GetAxis(horiAxis);
+        
+        if (pawn.holding)
+        {
+            //move set weird
+            vertical = vertical + Mathf.PerlinNoise(Time.time, 1);
+            horizontal = horizontal + Mathf.PerlinNoise(Time.time * 2, 1);
+            
+            //mess with mesh
+            
+
+        }
+        
+        //actual movement
+        
         if (vertical != 0 || horizontal != 0)
         {
-            pawn.moveStrat.Held(Time.deltaTime,pawn.GetComponent<Rigidbody>(),new Vector3(horizontal,0,vertical));
+            pawn.moveStrat.Held(Time.deltaTime, pawn.GetComponent<Rigidbody>(),
+                new Vector3(horizontal, 0, vertical));
             //moveCom.predict(pawn.netIdentity);
         }
 
