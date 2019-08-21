@@ -15,8 +15,10 @@ public class MoveStrat : IComStrat<Rigidbody,Vector3>
 
     public void Held(float totaltimedelta,Rigidbody body,Vector3 values)
     {
-        body.velocity = 
-            new Vector3(-values.x* movespeed * Time.deltaTime,body.velocity.y,-values.z* movespeed * Time.deltaTime);
+        body.AddForce(new Vector3(-values.x* movespeed * Time.deltaTime,body.velocity.y,-values.z* movespeed * Time.deltaTime));
+        
+        //body.velocity = 
+            //new Vector3(-values.x* movespeed * Time.deltaTime,body.velocity.y,-values.z* movespeed * Time.deltaTime);
     }
 
     public void Update(float totaltimedelta, Rigidbody pawn, Vector3 values)
