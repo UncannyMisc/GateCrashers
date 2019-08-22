@@ -32,7 +32,6 @@ public class Client : NetworkBehaviour
 
     public override void OnStartLocalPlayer()
     {
-        meshObj = pawn.transform.GetChild(0).gameObject;
         
         // movement for local player
         if (!isLocalPlayer) return;
@@ -61,6 +60,7 @@ public class Client : NetworkBehaviour
         pawn = a.GetComponent<BaseControlable>();
         pawn.OnPosses(this);
         CmdSetupPawn(a);
+        meshObj = pawn.transform.GetChild(0).gameObject;
         //NetworkServer.Spawn(temp);
         //RpcSetupPawn( temp.GetComponent<NetworkIdentity>());
     }
@@ -72,6 +72,7 @@ public class Client : NetworkBehaviour
         pawn = a.GetComponent<BaseControlable>();
         pawn.OnPosses(this);
         RpcSetupPawn(a);
+        meshObj = pawn.transform.GetChild(0).gameObject;
     }
 
     [ClientRpc]
@@ -94,6 +95,7 @@ public class Client : NetworkBehaviour
             GameObject temp = GameObject.FindWithTag("MainCamera").transform.parent.gameObject;
             temp.GetComponentInChildren<TimerUI>().players.Add(this);
         }
+        meshObj = pawn.transform.GetChild(0).gameObject;
     }
     #endregion
 
