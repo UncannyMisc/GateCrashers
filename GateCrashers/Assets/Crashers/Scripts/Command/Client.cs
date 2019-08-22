@@ -86,7 +86,14 @@ public class Client : NetworkBehaviour
             ClientCamera.transform.position = pawn.transform.position;
             ClientCamera.transform.SetParent(pawn.transform);
             ClientCamera.GetComponentInChildren<TimerUI>().client = this;
+            ClientCamera.GetComponentInChildren<TimerUI>().setup();
+            
             Debug.Log("setupcamera");
+        }
+        else
+        {
+            GameObject temp = GameObject.FindWithTag("MainCamera").transform.parent.gameObject;
+            temp.GetComponentInChildren<TimerUI>().players.Add(this);
         }
     }
     #endregion
