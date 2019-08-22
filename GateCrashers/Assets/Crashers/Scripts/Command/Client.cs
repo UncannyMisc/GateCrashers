@@ -123,33 +123,35 @@ public class Client : NetworkBehaviour
             //mess with mesh
             meshObj.transform.rotation = Quaternion.Euler(-vertical*wobble, 0, horizontal*wobble);
         }
-        
-        // movement for local player
-        if (!isLocalPlayer) return;
 
-        if (score < 99)
+        if (isServer)
         {
-            if (pawn.holding)
+            if (score < 99)
             {
-                if (time >= 2)
+                if (pawn.holding)
+                {
+                    if (time >= 2)
+                    {
+                        time = 0;
+                        score++;
+                    }
+
+                    time += Time.deltaTime;
+                }
+                else
                 {
                     time = 0;
-                    score++;
                 }
-
-                time += Time.deltaTime;
             }
             else
             {
-                time = 0;
+                EndingScript end = FindObjectOfType<EndingScript>();
+                end.gameEnded = true;
+                //change ui
             }
         }
-        else
-        {
-            EndingScript end = FindObjectOfType<EndingScript>();
-            end.gameEnded = true;
-            //change ui
-        }
+        // movement for local player
+        if (!isLocalPlayer) return;
         vertical = Input.GetAxis(vertAxis);
         horizontal = Input.GetAxis(horiAxis);
         
