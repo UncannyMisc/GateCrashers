@@ -10,7 +10,8 @@ public class TimerUI : MonoBehaviour
     public TextMeshProUGUI score;
     public Client client;
     public List<Client> players = new List<Client>();
-    
+
+    public bool won;
     
     // Start is called before the first frame update
     void Start()
@@ -28,7 +29,13 @@ public class TimerUI : MonoBehaviour
             {
                 foreach (Client player in players)
                 {
-                    temp += player.score + "/99"+"\n";
+                    if (won) temp = "You lose";
+                    if (player.score >= 99)
+                    {
+                        temp = "You won!";
+                        won = true;
+                    }
+                    else temp += player.score + "/99"+"\n";
                 }
             }
             score.SetText(temp);
