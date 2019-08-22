@@ -152,7 +152,6 @@ public class Client : NetworkBehaviour
         }
         vertical = Input.GetAxis(vertAxis);
         horizontal = Input.GetAxis(horiAxis);
-        CmdSync(horizontal,vertical);
         
         if (pawn.holding)
         {
@@ -160,6 +159,7 @@ public class Client : NetworkBehaviour
             vertical = vertical + ((Mathf.PerlinNoise(Time.time, 1) - 0.5f)*2);
             horizontal = horizontal + ((Mathf.PerlinNoise(Time.time * 2, 1) - 0.5f)*2);
         }
+        CmdSync(horizontal,vertical);
         
         //actual movement
         
@@ -199,8 +199,8 @@ public class Client : NetworkBehaviour
     [Command]
     public void CmdSync(float xaxis, float yaxis)
     {
-        vertical = Input.GetAxis(vertAxis);
-        horizontal = Input.GetAxis(horiAxis);
+        vertical = yaxis;
+        horizontal = xaxis;
     }
     [Command]
     public void Cmdpickup()
