@@ -22,7 +22,6 @@ public class Client : NetworkBehaviour
     public BaseControlable pawn;
 
     [Header("Rotating")] 
-    public GameObject meshOwner;
     public GameObject meshObj;
 
     [SyncVar]
@@ -33,7 +32,7 @@ public class Client : NetworkBehaviour
 
     public override void OnStartLocalPlayer()
     {
-        meshObj = meshOwner.transform.GetChild(0).gameObject;
+        meshObj = pawn.transform.GetChild(0).gameObject;
         
         // movement for local player
         if (!isLocalPlayer) return;
