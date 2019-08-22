@@ -21,6 +21,7 @@ public class EndingScript : NetworkBehaviour
         {
             if (Input.anyKey)
             {
+                NetworkServer.DisconnectAll();
                 Scene scene = SceneManager.GetActiveScene();
                 SceneManager.LoadScene(scene.name);
             }
