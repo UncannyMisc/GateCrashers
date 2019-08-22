@@ -130,7 +130,9 @@ public class Client : NetworkBehaviour
         }
         else
         {
-            
+            EndingScript end = FindObjectOfType<EndingScript>();
+            end.gameEnded = true;
+            //change ui
         }
         float vertical = Input.GetAxis(vertAxis);
         float horizontal = Input.GetAxis(horiAxis);
