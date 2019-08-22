@@ -25,12 +25,6 @@ public class Client : NetworkBehaviour
 <<<<<<< HEAD
     public float wobble = 20;
     [SyncVar] public int score = 0;
-=======
-    public float wobble = 50;
-
-    [SyncVar]
-    public int score = 0;
->>>>>>> master
 
     public float time = 0;
 
@@ -129,7 +123,6 @@ public class Client : NetworkBehaviour
             PickUp temp = FindObjectOfType<PickUp>();
             //make the item get picked up
             pawn.interactStrat.Update(Time.deltaTime, pawn.netIdentity, temp.netIdentity);
-<<<<<<< HEAD
 
             //mess with mesh
             meshObj.transform.rotation = Quaternion.Euler(-vertical * wobble, 0, horizontal * wobble);
@@ -178,23 +171,14 @@ public class Client : NetworkBehaviour
             //change ui
         }
 
-=======
-        // movement for local player
-        if (!isLocalPlayer) return;
->>>>>>> master
         vertical = Input.GetAxis(vertAxis);
         horizontal = Input.GetAxis(horiAxis);
 
         if (pawn.holding)
         {
             //move set weird
-<<<<<<< HEAD
             vertical = vertical + ((Mathf.PerlinNoise(Time.time, 1) - 0.5f) * 2);
             horizontal = horizontal + ((Mathf.PerlinNoise(Time.time * 2, 1) - 0.5f) * 2);
-=======
-            vertical = vertical + ((Mathf.PerlinNoise(Time.time, 1) - 0.5f)*wobble/2f);
-            horizontal = horizontal + ((Mathf.PerlinNoise(Time.time * 2, 1) - 0.5f)*wobble/2f);
->>>>>>> master
         }
 
         CmdSync(horizontal, vertical);
