@@ -46,8 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serverOnly: 0
   localPlayerAuthority: 1
-  m_AssetId: 4ae06a99ba50ab74185df27ea90b2440
-  m_SceneId: 0
+  m_AssetId: 
+  m_SceneId: 801872909
 --- !u!114 &1387218129377626578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,5 +70,9 @@ MonoBehaviour:
   horiAxis: Horizontal
   jumping: 0
   pawn: {fileID: 0}
-  meshOwner: {fileID: 1916082411674582, guid: 4ae06a99ba50ab74185df27ea90b2440, type: 3}
+  vertical: 0
+  horizontal: 0
   meshObj: {fileID: 0}
+  wobble: 10
+  score: 0
+  time: 0

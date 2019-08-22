@@ -27,7 +27,7 @@ public class Client : NetworkBehaviour
     [SyncVar]
     public float horizontal;
     public GameObject meshObj;
-    public float wobble = 20;
+    public float wobble = 50;
 
     [SyncVar]
     public int score = 0;
@@ -156,8 +156,8 @@ public class Client : NetworkBehaviour
         if (pawn.holding)
         {
             //move set weird
-            vertical = vertical + ((Mathf.PerlinNoise(Time.time, 1) - 0.5f)*2);
-            horizontal = horizontal + ((Mathf.PerlinNoise(Time.time * 2, 1) - 0.5f)*2);
+            vertical = vertical + ((Mathf.PerlinNoise(Time.time, 1) - 0.5f)*wobble/2f);
+            horizontal = horizontal + ((Mathf.PerlinNoise(Time.time * 2, 1) - 0.5f)*wobble/2f);
         }
         CmdSync(horizontal,vertical);
         
