@@ -122,10 +122,10 @@ public class Client : NetworkBehaviour
             PickUp temp = FindObjectOfType<PickUp>();
             //make the item get picked up
             pawn.interactStrat.Update(Time.deltaTime, pawn.netIdentity, temp.netIdentity);
-
-            //mess with mesh
-            meshObj.transform.rotation = Quaternion.Euler(-vertical * wobble, 0, horizontal * wobble);
         }
+
+        //mess with mesh
+        meshObj.transform.rotation = Quaternion.Euler(-vertical * wobble, 0, horizontal * wobble);
 
         // movement for local player
         if (!isLocalPlayer) return;
