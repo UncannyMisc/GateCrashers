@@ -11,7 +11,8 @@ public class CrasherManager : NetworkManager
     [FormerlySerializedAs("m_PlayerClientPrefab")] public GameObject playerPawnPrefab;
     public GameObject BeerCratePrefab;
     public GameObject ActiveBeerCrate;
-    
+    public Transform crateSpawn;
+
     public override void OnValidate()
     {
         // add transport if there is none yet. makes upgrading easier.
@@ -86,12 +87,12 @@ public class CrasherManager : NetworkManager
         // spawn ball if two players
         if (numPlayers == 1)
         {
-            ActiveBeerCrate = Instantiate(BeerCratePrefab);
+            ActiveBeerCrate = Instantiate(BeerCratePrefab, crateSpawn.position, crateSpawn.rotation);
             NetworkServer.Spawn(ActiveBeerCrate);
         }
         else if(numPlayers>1&& !ActiveBeerCrate)
         {
-            ActiveBeerCrate = Instantiate(BeerCratePrefab);
+            ActiveBeerCrate = Instantiate(BeerCratePrefab, crateSpawn.position, crateSpawn.rotation);
             NetworkServer.Spawn(ActiveBeerCrate);
         }
     }

@@ -5,13 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: Assets/Crashers/Scenes/Scene.unity
-    guid: 72d9d6df1a1030342aec5279d4247730
   - enabled: 1
-    path: Assets/Crashers/Scenes/CommandScene.unity
-    guid: e754dfa442180804f8ed9138e856dcd7
+    path: Assets/Levels/ParkParty.unity
+    guid: c88a70118cddef34da5acf3f94b46e6e
   m_configObjects: {}
