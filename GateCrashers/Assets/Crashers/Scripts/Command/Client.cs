@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class Client : NetworkBehaviour
 {
@@ -27,8 +28,10 @@ public class Client : NetworkBehaviour
 
     public float time = 0;
 
+    //the unsorted
     public UnityAction dropCall;
-    
+    [FormerlySerializedAs("forceDroppped")] public bool forceDrop;
+    public int timer2;
 
 
     public override void OnStartLocalPlayer()
@@ -126,34 +129,50 @@ public class Client : NetworkBehaviour
 
         //mess with mesh
         meshObj.transform.rotation = Quaternion.Euler(-vertical * wobble, 0, horizontal * wobble);
+        if (isServer)
+        {
+            if (score < 99)
+            {
+                if (pawn.holding)
+                {
+                    if (time >= 2)
+                    {
+                        time = 0;
+                        score++;
+                        wobble++;
+                    }
+
+                    time += Time.deltaTime;
+                }
+                else
+                {
+                    time = 0;
+                }
+            }
+            else
+            {
+                EndingScript end = FindObjectOfType<EndingScript>();
+                end.gameEnded = true;
+                //change ui
+            }
+        }
 
         // movement for local player
         if (!isLocalPlayer) return;
 
-        if (score < 99)
+        if (pawn.movementSpeed == 0)
         {
-            if (pawn.holding)
+            if (timer2 >= 2)
             {
-                if (time >= 2)
-                {
-                    time = 0;
-                    score++;
-                    wobble++;
-                }
-
-                time += Time.deltaTime;
+                timer2 = 0;
+                pawn.movementSpeed = 200;
             }
             else
             {
-                time = 0;
+                time += Time.deltaTime;
             }
         }
-        else
-        {
-            EndingScript end = FindObjectOfType<EndingScript>();
-            end.gameEnded = true;
-            //change ui
-        }
+
 
         vertical = Input.GetAxis(vertAxis);
         horizontal = Input.GetAxis(horiAxis);
@@ -215,6 +234,12 @@ public class Client : NetworkBehaviour
         FindObjectOfType<PickUp>().Dropped.RemoveListener(dropCall);
         pawn.holding = false;
         pawn.close = false;
+        if (forceDrop)
+        {
+            pawn.movementSpeed = 0;
+
+        }
+        else forceDrop = true;
     }
 
     [Command]
@@ -242,6 +267,7 @@ public class Client : NetworkBehaviour
         else
         {
             temp.Drop();
+            forceDrop = false;
         }
 
     }
