@@ -23,6 +23,7 @@ public class Client : NetworkBehaviour
 
     [Header("Rotating")] 
     public GameObject meshObj;
+    public float wobble = 20;
 
     [SyncVar]
     public int score = 0;
@@ -152,7 +153,7 @@ public class Client : NetworkBehaviour
             horizontal = horizontal + ((Mathf.PerlinNoise(Time.time * 2, 1) - 0.5f)*2);
             
             //mess with mesh
-            meshObj.transform.Rotate(horizontal, 0, vertical);
+            meshObj.transform.rotation = Quaternion.Euler(-vertical*wobble, 0, horizontal*wobble);
         }
         
         //actual movement

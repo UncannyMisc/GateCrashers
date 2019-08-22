@@ -8,8 +8,6 @@ using UnityEngine.SceneManagement;
 
 public class EndingScript : NetworkBehaviour
 {
-    // when someones score == 99, their UI becomes YOU WIN.  Others becomes YOU LOSE.  pressing any key makes the scene reload
-
     [SyncVar]
     public bool gameEnded;
 
