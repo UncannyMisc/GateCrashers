@@ -138,6 +138,7 @@ public class Client : NetworkBehaviour
                 {
                     time = 0;
                     score++;
+                    wobble++;
                 }
 
                 time += Time.deltaTime;
