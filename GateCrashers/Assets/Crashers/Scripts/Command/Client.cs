@@ -21,7 +21,11 @@ public class Client : NetworkBehaviour
     [Header("Possessions")]
     public BaseControlable pawn;
 
-    [Header("Rotating")] 
+    [Header("Movement")] 
+    [SyncVar]
+    public float vertical;
+    [SyncVar]
+    public float horizontal;
     public GameObject meshObj;
     public float wobble = 20;
 
@@ -143,8 +147,8 @@ public class Client : NetworkBehaviour
             end.gameEnded = true;
             //change ui
         }
-        float vertical = Input.GetAxis(vertAxis);
-        float horizontal = Input.GetAxis(horiAxis);
+        vertical = Input.GetAxis(vertAxis);
+        horizontal = Input.GetAxis(horiAxis);
         
         if (pawn.holding)
         {
