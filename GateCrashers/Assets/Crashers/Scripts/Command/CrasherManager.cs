@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 public class CrasherManager : NetworkManager
@@ -13,6 +14,20 @@ public class CrasherManager : NetworkManager
     public GameObject ActiveBeerCrate;
     public Transform crateSpawn;
 
+    public UnityAction restart;
+
+    public override void Start()
+    {
+        restart += CmdRestart;
+        
+    }
+
+    [Command] 
+    public void CmdRestart()
+    {
+        ActiveBeerCrate.transform.position = crateSpawn.position;
+    }
+    
     public override void OnValidate()
     {
         // add transport if there is none yet. makes upgrading easier.
@@ -95,6 +110,8 @@ public class CrasherManager : NetworkManager
             ActiveBeerCrate = Instantiate(BeerCratePrefab, crateSpawn.position, crateSpawn.rotation);
             NetworkServer.Spawn(ActiveBeerCrate);
         }
+        
+        FindObjectOfType<EndingScript>().gameRestart.AddListener(restart);
     }
     public override void OnServerDisconnect(NetworkConnection conn)
     {

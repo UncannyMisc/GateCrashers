@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class EndingScript : NetworkBehaviour
 {
     [SyncVar]
     public bool gameEnded;
+
+    public UnityEvent gameRestart;
 
     public void Update()
     {
@@ -18,9 +21,8 @@ public class EndingScript : NetworkBehaviour
         {
             if (Input.anyKey)
             {
-                NetworkServer.DisconnectAll();
-                Scene scene = SceneManager.GetActiveScene();
-                SceneManager.LoadScene(scene.name);
+                Debug.Log("got here");
+                gameRestart.Invoke();
             }
         }
     }

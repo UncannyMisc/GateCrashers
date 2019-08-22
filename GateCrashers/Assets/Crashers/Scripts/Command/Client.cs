@@ -30,6 +30,7 @@ public class Client : NetworkBehaviour
 
     //the unsorted
     public UnityAction dropCall;
+    public UnityAction restartCall;
     [FormerlySerializedAs("forceDroppped")] public bool forceDrop;
     public int timer2;
 
@@ -79,6 +80,8 @@ public class Client : NetworkBehaviour
         RpcSetupPawn(a);
         meshObj = pawn.transform.GetChild(0).gameObject;
         dropCall += CmdDrop;
+        restartCall += CmdRestart;
+        FindObjectOfType<EndingScript>().gameRestart.AddListener(restartCall);
     }
 
     [ClientRpc]
@@ -105,6 +108,9 @@ public class Client : NetworkBehaviour
 
         meshObj = pawn.transform.GetChild(0).gameObject;
         dropCall += CmdDrop;
+        restartCall += CmdRestart;
+        FindObjectOfType<EndingScript>().gameRestart.AddListener(restartCall);
+        
     }
 
     #endregion
@@ -115,6 +121,18 @@ public class Client : NetworkBehaviour
 
         if (ClientCamera != null)
             ClientCamera.transform.SetParent(null);
+    }
+    [Command] 
+    public void CmdRestart()
+    {
+        score = 0;
+        wobble = 20;
+        
+        PickUp temp = FindObjectOfType<PickUp>();
+        FindObjectOfType<PickUp>().Dropped.AddListener(dropCall);
+        forceDrop = false;
+        temp.Drop();
+
     }
 
     void Update()
@@ -246,6 +264,7 @@ public class Client : NetworkBehaviour
     public void Cmdpickup()
     {
         PickUp temp = FindObjectOfType<PickUp>();
+        FindObjectOfType<PickUp>().Dropped.AddListener(dropCall);
         if (temp.holder != this.netIdentity)
         {
             if (pawn.close)
@@ -255,7 +274,6 @@ public class Client : NetworkBehaviour
                     pawn.holding = true;
                     temp.held = true;
                     temp.PickUpBox(this.netIdentity);
-                    FindObjectOfType<PickUp>().Dropped.AddListener(dropCall);
                 }
                 else
                 {
@@ -266,8 +284,8 @@ public class Client : NetworkBehaviour
 
         else
         {
-            temp.Drop();
             forceDrop = false;
+            temp.Drop();
         }
 
     }

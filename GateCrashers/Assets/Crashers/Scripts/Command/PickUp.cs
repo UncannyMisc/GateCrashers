@@ -19,6 +19,7 @@ public class PickUp : NetworkBehaviour
         rb = GetComponent<Rigidbody>();
         
         if (Dropped == null) Dropped = new UnityEvent();
+
     }
 
     public void PickUpBox(NetworkIdentity other)
