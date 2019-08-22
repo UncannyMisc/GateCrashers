@@ -120,9 +120,9 @@ public class Client : NetworkBehaviour
             //make the item get picked up
             pawn.interactStrat.Update(Time.deltaTime, pawn.netIdentity, temp.netIdentity);
             
-            //mess with mesh
-            meshObj.transform.rotation = Quaternion.Euler(-vertical*wobble, 0, horizontal*wobble);
         }
+        //mess with mesh
+        meshObj.transform.rotation = Quaternion.Euler(-vertical*wobble, 0, horizontal*wobble);
 
         if (isServer)
         {
