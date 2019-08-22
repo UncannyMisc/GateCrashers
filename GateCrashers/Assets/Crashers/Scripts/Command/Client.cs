@@ -188,14 +188,15 @@ public class Client : NetworkBehaviour
         PickUp temp = FindObjectOfType<PickUp>();
         if (!pawn.holding)
         {
-            if (!temp.held)
+            if (pawn.close) temp.Check(this.netIdentity, pawn.netIdentity);
+            /*if (!temp.held)
             {
                 if (pawn.close) temp.Check(this.netIdentity, pawn.netIdentity);
             }
             else
             {
                 temp.Drop();
-            }
+            }*/
                 
         }
         else temp.Check(this.netIdentity, pawn.netIdentity);
