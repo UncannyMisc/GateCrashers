@@ -22,7 +22,6 @@ public class Client : NetworkBehaviour
     [Header("Movement")] [SyncVar] public float vertical;
     [SyncVar] public float horizontal;
     public GameObject meshObj;
-<<<<<<< HEAD
     public float wobble = 20;
     [SyncVar] public int score = 0;
 
@@ -130,40 +129,24 @@ public class Client : NetworkBehaviour
 
         // movement for local player
         if (!isLocalPlayer) return;
-=======
-            
-        }
-        //mess with mesh
-        meshObj.transform.rotation = Quaternion.Euler(-vertical*wobble, 0, horizontal*wobble);
->>>>>>> master
 
-        if (isServer)
+        if (score < 99)
         {
-            if (score < 99)
+            if (pawn.holding)
             {
-                if (pawn.holding)
-                {
-                    if (time >= 2)
-                    {
-                        time = 0;
-                        score++;
-                    }
-
-                    time += Time.deltaTime;
-                }
-                else
+                if (time >= 2)
                 {
                     time = 0;
+                    score++;
                 }
+
+                time += Time.deltaTime;
             }
             else
             {
-                EndingScript end = FindObjectOfType<EndingScript>();
-                end.gameEnded = true;
-                //change ui
+                time = 0;
             }
         }
-<<<<<<< HEAD
         else
         {
             EndingScript end = FindObjectOfType<EndingScript>();
