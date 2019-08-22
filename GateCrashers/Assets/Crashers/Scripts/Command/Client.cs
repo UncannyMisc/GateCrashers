@@ -119,6 +119,9 @@ public class Client : NetworkBehaviour
             PickUp temp = FindObjectOfType<PickUp>();
             //make the item get picked up
             pawn.interactStrat.Update(Time.deltaTime, pawn.netIdentity, temp.netIdentity);
+            
+            //mess with mesh
+            meshObj.transform.rotation = Quaternion.Euler(-vertical*wobble, 0, horizontal*wobble);
         }
         
         // movement for local player
@@ -149,15 +152,13 @@ public class Client : NetworkBehaviour
         }
         vertical = Input.GetAxis(vertAxis);
         horizontal = Input.GetAxis(horiAxis);
+        CmdSync(horizontal,vertical);
         
         if (pawn.holding)
         {
             //move set weird
             vertical = vertical + ((Mathf.PerlinNoise(Time.time, 1) - 0.5f)*2);
             horizontal = horizontal + ((Mathf.PerlinNoise(Time.time * 2, 1) - 0.5f)*2);
-            
-            //mess with mesh
-            meshObj.transform.rotation = Quaternion.Euler(-vertical*wobble, 0, horizontal*wobble);
         }
         
         //actual movement
@@ -195,6 +196,12 @@ public class Client : NetworkBehaviour
         }
     }
 
+    [Command]
+    public void CmdSync(float xaxis, float yaxis)
+    {
+        vertical = Input.GetAxis(vertAxis);
+        horizontal = Input.GetAxis(horiAxis);
+    }
     [Command]
     public void Cmdpickup()
     {
