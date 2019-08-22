@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using UnityEngine.Events;
 
 public class PickUp : NetworkBehaviour
 {
@@ -11,21 +12,55 @@ public class PickUp : NetworkBehaviour
     public NetworkIdentity holder; //whose holding the pickup
     private Rigidbody rb;
 
+    public UnityEvent Dropped;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        
+        if (Dropped == null) Dropped = new UnityEvent();
     }
-    public void Check(NetworkIdentity other, NetworkIdentity pawn)
+
+    public void PickUpBox(NetworkIdentity other)
     {
-        Debug.Log("check");
+        rb.isKinematic = true;
+        rb.useGravity = false;
+        held = true;
+        holder = other;
+    }
+
+    public void ForceDrop()
+    {
+        //run pause in holder
+        //holder.GetComponent<BaseControlable>().holding = false;
+        Dropped.Invoke();
+        held = false;
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        holder = null;
+    }
+
+    public void Drop()
+    {
+        //holder.GetComponent<BaseControlable>().holding = false;
+        Dropped.Invoke();
+        held = false;
+        rb.isKinematic = false;
+        rb.useGravity = true;
+        holder = null;
+    }
+    
+    /*public void Check(NetworkIdentity other, NetworkIdentity pawn)
+    {
         if (held)
         {
             //item is dropped
             rb.isKinematic = false;
             rb.useGravity = true;
             held = false;
+            holder.GetComponentInChildren<BaseControlable>().holding = false;
             holder = null;
-            pawn.GetComponent<BaseControlable>().holding = false;
+
         }
         else
         {
@@ -36,17 +71,7 @@ public class PickUp : NetworkBehaviour
             holder = other;
             pawn.GetComponent<BaseControlable>().holding = true;
         }
-    }
-
-    public void Drop()
-    {
-        holder.GetComponent<BaseControlable>().holding = false;
-        rb.isKinematic = false;
-        rb.useGravity = true;
-        held = false;
-        holder = null;
-    }
-
+    }*/
     //makes sure the player is close enough to be able to pick it up
     private void OnTriggerEnter(Collider other)
     {

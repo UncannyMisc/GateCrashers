@@ -2,42 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Client : NetworkBehaviour
 {
-    [Header("client objects")]
-    public GameObject ClientCamera;
+    [Header("client objects")] public GameObject ClientCamera;
 
     public GameObject startPlayerPrefab;
-    
-    [Header("Key Bindings")]
-    public KeyCode jumpKey = KeyCode.Space;
+
+    [Header("Key Bindings")] public KeyCode jumpKey = KeyCode.Space;
     public KeyCode interactKey = KeyCode.Mouse0;
 
     public string vertAxis = "Vertical";
     public string horiAxis = "Horizontal";
     public bool jumping = false;
 
-    [Header("Possessions")]
-    public BaseControlable pawn;
+    [Header("Possessions")] public BaseControlable pawn;
 
-    [Header("Movement")] 
-    [SyncVar]
-    public float vertical;
-    [SyncVar]
-    public float horizontal;
+    [Header("Movement")] [SyncVar] public float vertical;
+    [SyncVar] public float horizontal;
     public GameObject meshObj;
     public float wobble = 20;
-
-    [SyncVar]
-    public int score = 0;
+    [SyncVar] public int score = 0;
 
     public float time = 0;
+
+    public UnityAction dropCall;
+    
 
 
     public override void OnStartLocalPlayer()
     {
-        
+
         // movement for local player
         if (!isLocalPlayer) return;
         bool temp = true;
@@ -66,6 +62,7 @@ public class Client : NetworkBehaviour
         pawn.OnPosses(this);
         CmdSetupPawn(a);
         meshObj = pawn.transform.GetChild(0).gameObject;
+        
         //NetworkServer.Spawn(temp);
         //RpcSetupPawn( temp.GetComponent<NetworkIdentity>());
     }
@@ -78,6 +75,7 @@ public class Client : NetworkBehaviour
         pawn.OnPosses(this);
         RpcSetupPawn(a);
         meshObj = pawn.transform.GetChild(0).gameObject;
+        dropCall += CmdDrop;
     }
 
     [ClientRpc]
@@ -92,38 +90,43 @@ public class Client : NetworkBehaviour
             ClientCamera.transform.SetParent(pawn.transform);
             ClientCamera.GetComponentInChildren<TimerUI>().client = this;
             ClientCamera.GetComponentInChildren<TimerUI>().setup();
-            
+
             Debug.Log("setupcamera");
+            
         }
         else
         {
             GameObject temp = GameObject.FindWithTag("MainCamera").transform.parent.gameObject;
             temp.GetComponentInChildren<TimerUI>().players.Add(this);
         }
+
         meshObj = pawn.transform.GetChild(0).gameObject;
+        dropCall += CmdDrop;
     }
+
     #endregion
 
     private void OnDestroy()
     {
         // if local, set the camera free
-        if(ClientCamera!=null)
+
+        if (ClientCamera != null)
             ClientCamera.transform.SetParent(null);
     }
 
     void Update()
     {
         //hold the item
-        if (pawn&&pawn.holding)
+        if (pawn && pawn.holding)
         {
             PickUp temp = FindObjectOfType<PickUp>();
             //make the item get picked up
             pawn.interactStrat.Update(Time.deltaTime, pawn.netIdentity, temp.netIdentity);
-            
+
             //mess with mesh
-            meshObj.transform.rotation = Quaternion.Euler(-vertical*wobble, 0, horizontal*wobble);
+            meshObj.transform.rotation = Quaternion.Euler(-vertical * wobble, 0, horizontal * wobble);
         }
-        
+
         // movement for local player
         if (!isLocalPlayer) return;
 
@@ -150,19 +153,21 @@ public class Client : NetworkBehaviour
             end.gameEnded = true;
             //change ui
         }
+
         vertical = Input.GetAxis(vertAxis);
         horizontal = Input.GetAxis(horiAxis);
-        
+
         if (pawn.holding)
         {
             //move set weird
-            vertical = vertical + ((Mathf.PerlinNoise(Time.time, 1) - 0.5f)*2);
-            horizontal = horizontal + ((Mathf.PerlinNoise(Time.time * 2, 1) - 0.5f)*2);
+            vertical = vertical + ((Mathf.PerlinNoise(Time.time, 1) - 0.5f) * 2);
+            horizontal = horizontal + ((Mathf.PerlinNoise(Time.time * 2, 1) - 0.5f) * 2);
         }
-        CmdSync(horizontal,vertical);
-        
+
+        CmdSync(horizontal, vertical);
+
         //actual movement
-        
+
         if (vertical != 0 || horizontal != 0)
         {
             pawn.moveStrat.Held(Time.deltaTime, pawn.GetComponent<Rigidbody>(),
@@ -177,14 +182,14 @@ public class Client : NetworkBehaviour
             if (!jumping)
             {
                 // jump
-                if (Input.GetKeyDown(jumpKey)&&hit.collider)
+                if (Input.GetKeyDown(jumpKey) && hit.collider)
                 {
-                    pawn.jumpStrat.JustPressed(Time.deltaTime,pawn.GetComponent<Rigidbody>(),hit.collider);
+                    pawn.jumpStrat.JustPressed(Time.deltaTime, pawn.GetComponent<Rigidbody>(), hit.collider);
                     jumping = true;
                 }
             }
         }
-        else if(jumping)
+        else if (jumping)
         {
             jumping = false;
         }
@@ -202,23 +207,42 @@ public class Client : NetworkBehaviour
         vertical = yaxis;
         horizontal = xaxis;
     }
+
+    [Command]
+    public void CmdDrop()
+    {
+        FindObjectOfType<PickUp>().Dropped.RemoveListener(dropCall);
+        pawn.holding = false;
+        pawn.close = false;
+    }
+
     [Command]
     public void Cmdpickup()
     {
         PickUp temp = FindObjectOfType<PickUp>();
-        if (!pawn.holding)
+        if (temp.holder != this.netIdentity)
         {
-            if (pawn.close) temp.Check(this.netIdentity, pawn.netIdentity);
-            /*if (!temp.held)
+            if (pawn.close)
             {
-                if (pawn.close) temp.Check(this.netIdentity, pawn.netIdentity);
+                if (!temp.held)
+                {
+                    pawn.holding = true;
+                    temp.held = true;
+                    temp.PickUpBox(this.netIdentity);
+                    FindObjectOfType<PickUp>().Dropped.AddListener(dropCall);
+                }
+                else
+                {
+                    temp.ForceDrop();
+                }
             }
-            else
-            {
-                temp.Drop();
-            }*/
-                
         }
-        else temp.Check(this.netIdentity, pawn.netIdentity);
+
+        else
+        {
+            temp.Drop();
+        }
+
     }
+
 }
