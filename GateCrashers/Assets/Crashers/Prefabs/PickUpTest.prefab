@@ -4693,7 +4693,7 @@ ParticleSystem:
 --- !u!199 &2788489284225729435
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -4708,8 +4708,8 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: aca2b907c8c38134b9415eaece644a61, type: 2}
+  - {fileID: 2100000, guid: aca2b907c8c38134b9415eaece644a61, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4809,7 +4809,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 41a22c200bd47ed41a6437af7fcf8d4f, type: 2}
+  - {fileID: 2100000, guid: 2bed7c8709c8da741afff70e5606dc4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4907,6 +4907,11 @@ MonoBehaviour:
   syncInterval: 0.1
   held: 0
   holder: {fileID: 0}
+  Dropped:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!54 &5402495129728722238
 Rigidbody:
   m_ObjectHideFlags: 0

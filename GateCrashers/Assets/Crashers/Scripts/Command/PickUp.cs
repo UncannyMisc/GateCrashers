@@ -13,13 +13,23 @@ public class PickUp : NetworkBehaviour
     private Rigidbody rb;
 
     public UnityEvent Dropped;
+    public UnityAction restarting;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        restarting += CmdResetPos;
+        FindObjectOfType<EndingScript>().gameRestart.AddListener(restarting);
         
         if (Dropped == null) Dropped = new UnityEvent();
 
+    }
+
+    [Command]
+    public void CmdResetPos()
+    {
+        this.transform.position = FindObjectOfType<CrasherManager>().crateSpawn.position;
     }
 
     public void PickUpBox(NetworkIdentity other)

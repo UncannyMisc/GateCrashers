@@ -83,8 +83,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serverOnly: 0
   localPlayerAuthority: 1
-  m_AssetId: 
-  m_SceneId: 1374181563
+  m_AssetId: 0ed35175a5df53843b956baccfe34608
+  m_SceneId: 0
 --- !u!95 &3144487073416182539
 Animator:
   serializedVersion: 3
@@ -236,7 +236,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d9bd1828cd9c2dc4481b142777928d38, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

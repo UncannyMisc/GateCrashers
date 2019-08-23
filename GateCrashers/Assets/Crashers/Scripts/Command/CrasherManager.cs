@@ -14,19 +14,7 @@ public class CrasherManager : NetworkManager
     public GameObject ActiveBeerCrate;
     public Transform crateSpawn;
 
-    public UnityAction restart;
-
-    public override void Start()
-    {
-        restart += CmdRestart;
-        
-    }
-
-    [Command] 
-    public void CmdRestart()
-    {
-        ActiveBeerCrate.transform.position = crateSpawn.position;
-    }
+    
     
     public override void OnValidate()
     {
@@ -111,7 +99,6 @@ public class CrasherManager : NetworkManager
             NetworkServer.Spawn(ActiveBeerCrate);
         }
         
-        FindObjectOfType<EndingScript>().gameRestart.AddListener(restart);
     }
     public override void OnServerDisconnect(NetworkConnection conn)
     {

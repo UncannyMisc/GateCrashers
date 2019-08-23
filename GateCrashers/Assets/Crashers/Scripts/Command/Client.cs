@@ -34,6 +34,7 @@ public class Client : NetworkBehaviour
     [FormerlySerializedAs("forceDroppped")] public bool forceDrop;
     public int timer2;
 
+    public Material myMat;
 
     public override void OnStartLocalPlayer()
     {
@@ -65,7 +66,6 @@ public class Client : NetworkBehaviour
         pawn = a.GetComponent<BaseControlable>();
         pawn.OnPosses(this);
         CmdSetupPawn(a);
-        meshObj = pawn.transform.GetChild(0).gameObject;
         
         //NetworkServer.Spawn(temp);
         //RpcSetupPawn( temp.GetComponent<NetworkIdentity>());
@@ -82,6 +82,10 @@ public class Client : NetworkBehaviour
         dropCall += CmdDrop;
         restartCall += CmdRestart;
         FindObjectOfType<EndingScript>().gameRestart.AddListener(restartCall);
+
+        myMat = meshObj.GetComponentInChildren<Renderer>().material;
+        float temp = Random.Range(0f, 1f);
+        myMat.SetFloat("Vector1_6FD2A65A", temp);
     }
 
     [ClientRpc]
@@ -252,6 +256,7 @@ public class Client : NetworkBehaviour
         FindObjectOfType<PickUp>().Dropped.RemoveListener(dropCall);
         pawn.holding = false;
         pawn.close = false;
+        myMat.SetInt("Boolean_D7C5BB61", 0);
         if (forceDrop)
         {
             pawn.movementSpeed = 0;
@@ -274,6 +279,7 @@ public class Client : NetworkBehaviour
                     pawn.holding = true;
                     temp.held = true;
                     temp.PickUpBox(this.netIdentity);
+                    myMat.SetInt("Boolean_D7C5BB61", 1);
                 }
                 else
                 {
